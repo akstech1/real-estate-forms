@@ -64,3 +64,160 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+# Laravel 10 Multilingual Admin Panel
+
+A Laravel 10 application with a fully functional admin panel built with modern design and authentication.
+
+## Features
+
+- 🔐 **Authentication**: Built-in Laravel Breeze authentication
+- 📊 **Admin Dashboard**: Statistics and overview
+- 🎨 **Responsive Design**: Bootstrap 5 with custom styling
+- 📱 **Mobile Friendly**: Responsive design for all devices
+
+## Installation
+
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   composer install
+   npm install
+   ```
+
+3. Copy environment file:
+   ```bash
+   cp .env.example .env
+   ```
+
+4. Generate application key:
+   ```bash
+   php artisan key:generate
+   ```
+
+5. Configure your database in `.env` file
+
+6. Run migrations and seeders:
+   ```bash
+   php artisan migrate
+   php artisan db:seed
+   ```
+
+7. Start the development server:
+   ```bash
+   php artisan serve
+   ```
+
+## Default Login Credentials
+
+After running the seeder, you can login with:
+- **Email**: `admin@example.com`
+- **Password**: `password`
+
+## Usage
+
+### Accessing the Application
+
+- **Login Page**: `/` (redirects to `/login`)
+- **Admin Dashboard**: `/admin` (requires authentication)
+- **Profile**: `/profile` (requires authentication)
+
+
+
+## File Structure
+
+```
+resources/
+├── lang/
+│   └── en/
+│       └── admin.php          # English translations
+└── views/
+    ├── auth/                   # Authentication views (Breeze)
+    └── admin/
+        ├── layouts/
+        │   └── app.blade.php  # Main admin layout
+        └── admin/ # Admin panel views
+    ├── dashboard.blade.php # Admin dashboard
+    ├── layouts/
+    │   └── app.blade.php # Admin layout with sidebar
+    ├── banners/ # Banner management views
+    │   ├── index.blade.php
+    │   ├── create.blade.php
+    │   └── edit.blade.php
+    └── about/ # About Us management
+        └── edit.blade.php
+
+app/
+├── Http/
+│   ├── Controllers/
+│   │   └── AdminController.php    # Admin functionality
+│   └── Middleware/
+
+database/
+└── seeders/
+    └── AdminUserSeeder.php        # Default admin user
+```
+
+## Middleware
+
+
+
+## Controllers
+
+### AdminController
+
+Handles admin panel functionality:
+- Dashboard statistics
+
+
+
+## Routes
+
+```php
+// Root redirects to login
+Route::get('/', function () {
+    return redirect()->route('login');
+});
+
+
+
+// Dashboard routes (protected by auth) - Shows admin panel
+Route::middleware(['auth', 'verified'])->prefix('dashboard')->name('dashboard.')->group(function () {
+    Route::get('/', [AdminController::class, 'dashboard'])->name('index');
+    
+    // Home menu
+    Route::prefix('home')->name('home.')->group(function () {
+        // Banners
+        Route::get('/banners', [AdminController::class, 'banners'])->name('banners');
+        Route::get('/banners/create', [AdminController::class, 'createBanner'])->name('banners.create');
+        Route::post('/banners', [AdminController::class, 'storeBanner'])->name('banners.store');
+        Route::get('/banners/{banner}/edit', [AdminController::class, 'editBanner'])->name('banners.edit');
+        Route::put('/banners/{banner}', [AdminController::class, 'updateBanner'])->name('banners.update');
+        Route::delete('/banners/{banner}', [AdminController::class, 'deleteBanner'])->name('banners.delete');
+        
+        // About Us
+        Route::get('/about', [AdminController::class, 'about'])->name('about');
+        Route::put('/about', [AdminController::class, 'updateAbout'])->name('about.update');
+    });
+});
+
+// Authentication routes (Breeze)
+require __DIR__.'/auth.php';
+```
+
+## Customization
+
+### Styling
+
+The admin panel uses Bootstrap 5 with custom CSS and modern design principles.
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Submit a pull request
+
+## License
+
+This project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
