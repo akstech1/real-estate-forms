@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('social_media_links', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('logo');
             $table->string('link');
             $table->timestamps();
         });
@@ -22,8 +21,8 @@ return new class extends Migration
         // Create pivot table for contact_us and social_media_links
         Schema::create('contact_us_social_media_link', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('contact_us_id')->constrained()->onDelete('cascade');
-            $table->foreignId('social_media_link_id')->constrained()->onDelete('cascade');
+            $table->foreignId('contact_us_id')->constrained('contact_us')->onDelete('cascade');
+            $table->foreignId('social_media_link_id')->constrained('social_media_links')->onDelete('cascade');
             $table->timestamps();
         });
     }
