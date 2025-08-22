@@ -28,6 +28,7 @@
                         <th>Description (AR)</th>
                         <th>Website</th>
                         <th>Background</th>
+                        <th>Status</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -62,6 +63,13 @@
                                 <div class="color-preview me-2" style="width: 20px; height: 20px; background-color: {{ $partner->background_colour }}; border-radius: 4px; border: 1px solid #ddd;"></div>
                                 <small>{{ $partner->background_colour }}</small>
                             </div>
+                        </td>
+                        <td>
+                            @if($partner->is_active)
+                                <span class="badge bg-success">Active</span>
+                            @else
+                                <span class="badge bg-secondary">Inactive</span>
+                            @endif
                         </td>
                         <td>
                             <div class="btn-group" role="group">

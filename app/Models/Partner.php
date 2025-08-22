@@ -18,10 +18,12 @@ class Partner extends Model implements HasMedia
         'short_description_ar',
         'background_colour',
         'website_link',
+        'is_active',
     ];
 
     protected $casts = [
         'background_colour' => 'string',
+        'is_active' => 'boolean',
     ];
 
     public function registerMediaCollections(): void

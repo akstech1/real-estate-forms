@@ -135,6 +135,18 @@
                         @enderror
                     </div>
                 </div>
+                
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="is_active" name="is_active" value="1" checked>
+                            <label class="form-check-label" for="is_active">
+                                Active Partner
+                            </label>
+                        </div>
+                        <div class="form-text">Check this box to make the partner visible</div>
+                    </div>
+                </div>
             </div>
             
             <div class="d-flex justify-content-end gap-2 mt-4">

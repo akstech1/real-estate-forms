@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('short_description_ar');
             $table->string('background_colour')->default('#ffffff');
             $table->string('website_link')->nullable();
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }

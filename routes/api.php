@@ -17,3 +17,12 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// About Us API
+Route::get('/about-us', [App\Http\Controllers\Api\AboutUsController::class, 'index']);
+
+// Contact API
+Route::get('/contact', [App\Http\Controllers\Api\ContactController::class, 'index']);
+
+// Terms & Conditions API
+Route::get('/terms', [App\Http\Controllers\Api\TermsController::class, 'index']);
