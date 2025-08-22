@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('partners', function (Blueprint $table) {
+        Schema::create('terms', function (Blueprint $table) {
             $table->id();
-            $table->string('title_en');
-            $table->string('title_ar');
-            $table->text('short_description_en');
-            $table->text('short_description_ar');
-            $table->string('background_colour')->default('#ffffff');
-            $table->string('website_link')->nullable();
+            $table->text('heading_en');
+            $table->text('heading_ar');
+            $table->longText('description_en');
+            $table->longText('description_ar');
+            $table->integer('sort_order')->default(0);
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('partners');
+        Schema::dropIfExists('terms');
     }
 };

@@ -17,6 +17,7 @@ class Partner extends Model implements HasMedia
         'short_description_en',
         'short_description_ar',
         'background_colour',
+        'website_link',
     ];
 
     protected $casts = [

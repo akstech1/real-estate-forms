@@ -121,6 +121,20 @@
                         @enderror
                     </div>
                 </div>
+                
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="website_link" class="form-label">Website Link</label>
+                        <input type="url" class="form-control @error('website_link') is-invalid @enderror" 
+                               id="website_link" name="website_link" 
+                               value="{{ old('website_link') }}"
+                               placeholder="https://example.com">
+                        <div class="form-text">Optional: Enter the partner's website URL</div>
+                        @error('website_link')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
             </div>
             
             <div class="d-flex justify-content-end gap-2 mt-4">

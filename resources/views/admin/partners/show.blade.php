@@ -97,6 +97,20 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="mb-3">
+                            <label class="form-label fw-bold">Website Link:</label>
+                            @if($partner->website_link)
+                                <p class="mb-0">
+                                    <a href="{{ $partner->website_link }}" target="_blank" class="text-decoration-none">
+                                        <i class="fas fa-external-link-alt me-1"></i>
+                                        {{ $partner->website_link }}
+                                    </a>
+                                </p>
+                            @else
+                                <p class="mb-0 text-muted">No website link provided</p>
+                            @endif
+                        </div>
+                        
+                        <div class="mb-3">
                             <label class="form-label fw-bold">Created:</label>
                             <p class="mb-0">{{ $partner->created_at->format('F j, Y \a\t g:i A') }}</p>
                         </div>

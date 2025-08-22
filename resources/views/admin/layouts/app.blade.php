@@ -15,6 +15,8 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
+    @stack('styles')
+    
     <!-- Custom CSS -->
     <style>
         :root {
@@ -496,6 +498,16 @@
                 <i class="fas fa-question-circle"></i>
                 FAQs
             </a>
+            
+            <a class="nav-link {{ request()->routeIs('dashboard.terms.*') ? 'active' : '' }}" href="{{ route('dashboard.terms.index') }}">
+                <i class="fas fa-file-contract"></i>
+                Terms & Conditions
+            </a>
+            
+            <a class="nav-link {{ request()->routeIs('dashboard.contact.*') ? 'active' : '' }}" href="{{ route('dashboard.contact.edit') }}">
+                <i class="fas fa-address-book"></i>
+                Contact Us
+            </a>
         </nav>
     </div>
     
@@ -546,6 +558,9 @@
             @yield('content')
         </div>
     </div>
+    
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

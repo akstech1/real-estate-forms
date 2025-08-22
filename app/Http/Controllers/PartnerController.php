@@ -36,6 +36,7 @@ class PartnerController extends Controller
             'short_description_en' => 'required|string',
             'short_description_ar' => 'required|string',
             'background_colour' => 'required|string|max:7',
+            'website_link' => 'nullable|url|max:500',
             'logo' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
 
@@ -77,6 +78,7 @@ class PartnerController extends Controller
             'short_description_en' => 'required|string',
             'short_description_ar' => 'required|string',
             'background_colour' => 'required|string|max:7',
+            'website_link' => 'nullable|url|max:500',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
 

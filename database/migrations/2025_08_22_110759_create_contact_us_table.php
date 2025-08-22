@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('partners', function (Blueprint $table) {
+        Schema::create('contact_us', function (Blueprint $table) {
             $table->id();
-            $table->string('title_en');
-            $table->string('title_ar');
-            $table->text('short_description_en');
-            $table->text('short_description_ar');
-            $table->string('background_colour')->default('#ffffff');
-            $table->string('website_link')->nullable();
+            $table->text('address_en');
+            $table->text('address_ar');
+            $table->string('email');
+            $table->string('phone_number');
+            $table->decimal('latitude', 10, 8)->nullable();
+            $table->decimal('longitude', 11, 8)->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('partners');
+        Schema::dropIfExists('contact_us');
     }
 };
