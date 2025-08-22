@@ -32,3 +32,4 @@ Route::get('/faqs', [App\Http\Controllers\Api\FaqsController::class, 'index']);
 
 // Partners API
 Route::get('/partners', [App\Http\Controllers\Api\PartnersController::class, 'index']);
+
