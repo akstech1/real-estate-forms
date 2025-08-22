@@ -3,15 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Terms;
-use App\Models\TermsBanner;
+use App\Models\Partner;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 
-class TermsController extends Controller
+class PartnersController extends Controller
 {
     /**
-     * Get Terms & Conditions information with language support
+     * Get Partners information with language support
      *
      * @param Request $request
      * @return JsonResponse
@@ -23,23 +22,21 @@ class TermsController extends Controller
             $language = $request->header('Accept-Language', 'en');
             $language = in_array($language, ['en', 'ar']) ? $language : 'en';
 
-            // Get Terms Banner data
-            $termsBanner = TermsBanner::first();
-
-            // Get Terms & Conditions data (only active ones)
-            $terms = Terms::where('is_active', true)
-                         ->get();
+            // Get Partners data (only active ones)
+            $partners = Partner::where('is_active', true)
+                              ->latest()
+                              ->get();
 
             // Prepare response data
-            $data = [
-                'banner_image' => $termsBanner ? $termsBanner->getFirstMediaUrl('banner_image') : null,
-                'terms_and_conditions' => $terms->map(function ($term) use ($language) {
-                    return [
-                        'heading' => $language === 'ar' ? $term->heading_ar : $term->heading_en,
-                        'description' => $language === 'ar' ? $term->description_ar : $term->description_en,
-                    ];
-                })->toArray(),
-            ];
+            $data = $partners->map(function ($partner) use ($language) {
+                return [
+                    'title' => $language === 'ar' ? $partner->title_ar : $partner->title_en,
+                    'short_description' => $language === 'ar' ? $partner->short_description_ar : $partner->short_description_en,
+                    'background_colour' => $partner->background_colour,
+                    'website_link' => $partner->website_link,
+                    'image' => $partner->getFirstMediaUrl('logo') ?: null,
+                ];
+            })->toArray();
 
             return $this->successResponse($data, 'Request processed successfully.');
 

@@ -26,3 +26,9 @@ Route::get('/contact', [App\Http\Controllers\Api\ContactController::class, 'inde
 
 // Terms & Conditions API
 Route::get('/terms', [App\Http\Controllers\Api\TermsController::class, 'index']);
+
+// FAQs API
+Route::get('/faqs', [App\Http\Controllers\Api\FaqsController::class, 'index']);
+
+// Partners API
+Route::get('/partners', [App\Http\Controllers\Api\PartnersController::class, 'index']);

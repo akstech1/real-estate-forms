@@ -3,15 +3,15 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Terms;
-use App\Models\TermsBanner;
+use App\Models\Faq;
+use App\Models\FaqBanner;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 
-class TermsController extends Controller
+class FaqsController extends Controller
 {
     /**
-     * Get Terms & Conditions information with language support
+     * Get FAQs information with language support
      *
      * @param Request $request
      * @return JsonResponse
@@ -23,20 +23,20 @@ class TermsController extends Controller
             $language = $request->header('Accept-Language', 'en');
             $language = in_array($language, ['en', 'ar']) ? $language : 'en';
 
-            // Get Terms Banner data
-            $termsBanner = TermsBanner::first();
-
-            // Get Terms & Conditions data (only active ones)
-            $terms = Terms::where('is_active', true)
-                         ->get();
+            // Get FAQ Banner data
+            $faqBanner = FaqBanner::first();
+            
+            // Get FAQs data (only active ones)
+            $faqs = Faq::where('is_active', true)
+                       ->get();
 
             // Prepare response data
             $data = [
-                'banner_image' => $termsBanner ? $termsBanner->getFirstMediaUrl('banner_image') : null,
-                'terms_and_conditions' => $terms->map(function ($term) use ($language) {
+                'banner_image' => $faqBanner ? $faqBanner->getFirstMediaUrl('banner_image') : null,
+                'faqs' => $faqs->map(function ($faq) use ($language) {
                     return [
-                        'heading' => $language === 'ar' ? $term->heading_ar : $term->heading_en,
-                        'description' => $language === 'ar' ? $term->description_ar : $term->description_en,
+                        'question' => $language === 'ar' ? $faq->question_ar : $faq->question_en,
+                        'answer' => $language === 'ar' ? $faq->answer_ar : $faq->answer_en,
                     ];
                 })->toArray(),
             ];
