@@ -15,7 +15,7 @@ class ContactUsController extends Controller
     public function edit()
     {
         $contactUs = ContactUs::first();
-        
+
         if (!$contactUs) {
             $contactUs = ContactUs::create([
                 'address_en' => '',
@@ -51,7 +51,7 @@ class ContactUsController extends Controller
         ]);
 
         $contactUs = ContactUs::first();
-        
+
         if (!$contactUs) {
             $contactUs = new ContactUs();
         }
@@ -64,22 +64,22 @@ class ContactUsController extends Controller
             'latitude',
             'longitude',
         ]));
-        
+
         $contactUs->save();
 
         // Handle social media links
         if ($request->has('social_media_links')) {
             // Get existing social media links
             $existingLinks = $contactUs->socialMediaLinks;
-            
+
             // Clear existing relationships
             $contactUs->socialMediaLinks()->detach();
-            
+
             // Process each social media link
             foreach ($request->social_media_links as $index => $linkData) {
                 // Check if this is an existing link being updated
                 $existingLink = $existingLinks->get($index);
-                
+
                 if ($existingLink && !isset($linkData['logo'])) {
                     // This is an existing link with no new logo - update and preserve logo
                     $existingLink->update([
@@ -91,22 +91,21 @@ class ContactUsController extends Controller
                     // This is either a new link or existing link with new logo
                     $socialMediaLink = SocialMediaLink::create([
                         'name' => $linkData['name'],
-                        'logo' => '', // This will be empty as we're using Media Library
                         'link' => $linkData['link'],
                     ]);
-                    
+
                     // Handle logo file upload
                     if (isset($linkData['logo']) && $linkData['logo']->isValid()) {
                         $socialMediaLink->addMediaFromRequest('social_media_links.' . $index . '.logo')
                                        ->toMediaCollection('logo');
                     }
-                    
+
                     // If updating existing link, delete the old one
                     if ($existingLink) {
                         $existingLink->delete();
                     }
                 }
-                
+
                 $contactUs->socialMediaLinks()->attach($socialMediaLink->id);
             }
         }
@@ -121,10 +120,10 @@ class ContactUsController extends Controller
     public function deleteSocialMediaLink(Request $request, $id)
     {
         $socialMediaLink = SocialMediaLink::findOrFail($id);
-        
+
         // Detach from all contact us records
         $socialMediaLink->contactUs()->detach();
-        
+
         // Delete the social media link (this will also delete associated media)
         $socialMediaLink->delete();
 

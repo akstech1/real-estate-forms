@@ -84,4 +84,16 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// Test route for Media Library configuration (remove in production)
+Route::get('/test-media-config', function () {
+    return [
+        'disk_name' => config('media-library.disk_name'),
+        'url_generator' => config('media-library.url_generator'),
+        'path_generator' => config('media-library.path_generator'),
+        'uploads_path' => public_path('uploads'),
+        'uploads_url' => url('uploads'),
+        'storage_path' => storage_path('app/public'),
+    ];
+})->middleware('auth');
+
 require __DIR__.'/auth.php';

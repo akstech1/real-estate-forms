@@ -13,7 +13,6 @@ class SocialMediaLink extends Model implements HasMedia
 
     protected $fillable = [
         'name',
-        'logo',
         'link',
     ];
 
