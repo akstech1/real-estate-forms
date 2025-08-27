@@ -11,15 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('banners', function (Blueprint $table) {
+        Schema::create('testimonials', function (Blueprint $table) {
             $table->id();
-            $table->string('title_en');
-            $table->string('title_ar');
-            $table->text('short_description_en')->nullable();
-            $table->text('short_description_ar')->nullable();
-            $table->string('button_text_en')->nullable();
-            $table->string('button_text_ar')->nullable();
-            $table->string('button_link')->nullable();
+            $table->string('name_en');
+            $table->string('name_ar');
+            $table->text('short_description_en');
+            $table->text('short_description_ar');
+            $table->decimal('rating', 2, 1)->default(5.0); // 1.0 to 5.0
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('banners');
+        Schema::dropIfExists('testimonials');
     }
 };

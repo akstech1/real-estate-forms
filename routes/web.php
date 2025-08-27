@@ -10,6 +10,10 @@ use App\Http\Controllers\FaqBannerController;
 use App\Http\Controllers\TermsController;
 use App\Http\Controllers\TermsBannerController;
 use App\Http\Controllers\ContactUsController;
+use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\HomepageStatController;
+use App\Http\Controllers\LinkController;
+use App\Http\Controllers\TestimonialController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,22 +36,32 @@ Route::get('/', function () {
 Route::middleware(['auth', 'verified'])->prefix('dashboard')->name('dashboard.')->group(function () {
     Route::get('/', [AdminController::class, 'dashboard'])->name('index');
     
+    // Banners
+    Route::resource('banners', BannerController::class);
+    
+    // Services
+    Route::resource('services', ServiceController::class);
+    
+    // Homepage Stats
+    Route::get('homepage-stats', [HomepageStatController::class, 'edit'])->name('homepage-stats.edit');
+    Route::put('homepage-stats', [HomepageStatController::class, 'update'])->name('homepage-stats.update');
+    
+    // Links
+    Route::resource('links', LinkController::class);
+    
+    // Testimonials
+    Route::resource('testimonials', TestimonialController::class);
+    Route::patch('testimonials/{testimonial}/toggle-status', [TestimonialController::class, 'toggleStatus'])->name('testimonials.toggle-status');
+    
     // Home menu
     Route::prefix('home')->name('home.')->group(function () {
-        // Banners
-        Route::get('banners', [BannerController::class, 'index'])->name('banners.index');
-        Route::get('banners/create', [BannerController::class, 'create'])->name('banners.create');
-        Route::post('banners', [BannerController::class, 'store'])->name('banners.store');
-        Route::get('banners/{banner}/edit', [BannerController::class, 'edit'])->name('banners.edit');
-        Route::put('banners/{banner}', [BannerController::class, 'update'])->name('banners.update');
-        Route::delete('banners/{banner}', [BannerController::class, 'destroy'])->name('banners.destroy');
-        
         // About Us
         Route::get('about', [AboutController::class, 'show'])->name('about');
         Route::put('about/header', [AboutController::class, 'updateHeader'])->name('about.header.update');
         Route::put('about/platform', [AboutController::class, 'updatePlatform'])->name('about.platform.update');
         Route::put('about/mission', [AboutController::class, 'updateMission'])->name('about.mission.update');
         Route::put('about/goals', [AboutController::class, 'updateGoals'])->name('about.goals.update');
+        Route::put('about/home', [AboutController::class, 'updateHome'])->name('about.home.update');
         Route::put('about', [AboutController::class, 'update'])->name('about.update'); // Deprecated
     });
     

@@ -508,6 +508,31 @@
                 <i class="fas fa-address-book"></i>
                 Contact Us
             </a>
+            
+            <a class="nav-link {{ request()->routeIs('dashboard.banners.*') ? 'active' : '' }}" href="{{ route('dashboard.banners.index') }}">
+                <i class="fas fa-images"></i>
+                Banners Management
+            </a>
+            
+            <a class="nav-link {{ request()->routeIs('dashboard.services.*') ? 'active' : '' }}" href="{{ route('dashboard.services.index') }}">
+                <i class="fas fa-cogs"></i>
+                Services
+            </a>
+            
+            <a class="nav-link {{ request()->routeIs('dashboard.homepage-stats.*') ? 'active' : '' }}" href="{{ route('dashboard.homepage-stats.edit') }}">
+                <i class="fas fa-chart-bar"></i>
+                Homepage Stats
+            </a>
+            
+            <a class="nav-link {{ request()->routeIs('dashboard.links.*') ? 'active' : '' }}" href="{{ route('dashboard.links.index') }}">
+                <i class="fas fa-link"></i>
+                Links
+            </a>
+            
+            <a class="nav-link {{ request()->routeIs('dashboard.testimonials.*') ? 'active' : '' }}" href="{{ route('dashboard.testimonials.index') }}">
+                <i class="fas fa-comments"></i>
+                Testimonials
+            </a>
         </nav>
     </div>
     

@@ -6,18 +6,18 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="card-title mb-0">Banners Management</h5>
-                    <a href="{{ route('dashboard.banners.create') }}" class="btn btn-primary">
-                        <i class="fas fa-plus me-2"></i>Add New Banner
+                    <h5 class="card-title mb-0">Links Management</h5>
+                    <a href="{{ route('dashboard.links.create') }}" class="btn btn-primary">
+                        <i class="fas fa-plus me-2"></i>Add New Link
                     </a>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="bannersTable" class="table table-striped table-bordered">
+                        <table id="linksTable" class="table table-striped table-bordered">
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Image</th>
+                                    <th>Logo</th>
                                     <th>Title (EN)</th>
                                     <th>Title (AR)</th>
                                     <th>Status</th>
@@ -25,29 +25,29 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($banners as $banner)
+                                @foreach($links as $link)
                                 <tr>
-                                    <td>{{ $banner->id }}</td>
+                                    <td>{{ $link->id }}</td>
                                     <td>
-                                        @if($banner->banner_image_url)
-                                            <img src="{{ $banner->banner_image_url }}" alt="Banner" class="img-thumbnail" style="max-width: 80px; max-height: 60px;">
+                                        @if($link->logo_url)
+                                            <img src="{{ $link->logo_url }}" alt="Link Logo" class="img-thumbnail" style="max-width: 80px; max-height: 60px;">
                                         @else
-                                            <span class="text-muted">No Image</span>
+                                            <span class="text-muted">No Logo</span>
                                         @endif
                                     </td>
-                                    <td>{{ $banner->title_en }}</td>
-                                    <td>{{ $banner->title_ar }}</td>
+                                    <td>{{ $link->title_en }}</td>
+                                    <td>{{ $link->title_ar }}</td>
                                     <td>
-                                        <span class="badge {{ $banner->is_active ? 'bg-success' : 'bg-danger' }}">
-                                            {{ $banner->is_active ? 'Active' : 'Inactive' }}
+                                        <span class="badge {{ $link->is_active ? 'bg-success' : 'bg-danger' }}">
+                                            {{ $link->is_active ? 'Active' : 'Inactive' }}
                                         </span>
                                     </td>
                                     <td>
                                         <div class="btn-group" role="group">
-                                            <a href="{{ route('dashboard.banners.edit', $banner) }}" class="btn btn-sm btn-outline-primary">
+                                            <a href="{{ route('dashboard.links.edit', $link) }}" class="btn btn-sm btn-outline-primary">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-                                            <form action="{{ route('dashboard.banners.destroy', $banner) }}" method="POST" class="d-inline delete-form">
+                                            <form action="{{ route('dashboard.links.destroy', $link) }}" method="POST" class="d-inline delete-form">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-sm btn-outline-danger">
@@ -76,7 +76,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                Are you sure you want to delete this banner? This action cannot be undone.
+                Are you sure you want to delete this link? This action cannot be undone.
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -102,7 +102,6 @@
         background-position: right 0.75rem center;
         background-size: 16px 12px;
         border: 1px solid #ced4da;
-        border-radius: 0.375rem;
         transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
     }
 </style>
@@ -114,7 +113,7 @@
 <script>
 $(document).ready(function() {
     // Initialize DataTable
-    $('#bannersTable').DataTable({
+    $('#linksTable').DataTable({
         responsive: true,
         order: [[0, 'desc']],
         pageLength: 25,
@@ -145,3 +144,4 @@ $(document).ready(function() {
 });
 </script>
 @endpush
+

@@ -30,6 +30,16 @@ class AboutController extends Controller
                 'our_mission_vision_description_en' => 'Our vision is to become the leading provider in our industry',
                 'our_goal_description_ar' => 'أهدافنا',
                 'our_goal_description_en' => 'Our Goals',
+                'home_short_description_ar' => 'وصف قصير للصفحة الرئيسية',
+                'home_short_description_en' => 'Home page short description',
+                'home_button_text_en' => 'Learn More',
+                'home_button_text_ar' => 'اعرف المزيد',
+                'home_button_link' => 'https://example.com',
+                'count' => '1000+',
+                'count_heading_en' => 'Happy Customers',
+                'count_heading_ar' => 'عملاء سعداء',
+                'count_description_en' => 'We have served thousands of satisfied customers',
+                'count_description_ar' => 'لقد خدمنا آلاف العملاء الراضين',
             ]);
         }
 
@@ -181,6 +191,65 @@ class AboutController extends Controller
         }
 
         return redirect()->route('dashboard.home.about')->with('success', 'Goals section updated successfully!');
+    }
+
+    /**
+     * Update the home section.
+     */
+    public function updateHome(Request $request)
+    {
+        $request->validate([
+            'home_short_description_ar' => 'required|string',
+            'home_short_description_en' => 'required|string',
+            'home_button_text_en' => 'required|string|max:255',
+            'home_button_text_ar' => 'required|string|max:255',
+            'home_button_link' => 'required|url|max:255',
+            'home_logo' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'count' => 'required|string|max:255',
+            'count_heading_en' => 'required|string|max:255',
+            'count_heading_ar' => 'required|string|max:255',
+            'count_description_en' => 'required|string',
+            'count_description_ar' => 'required|string',
+        ], [
+            'home_short_description_ar.required' => 'Home short description (Arabic) is required.',
+            'home_short_description_en.required' => 'Home short description (English) is required.',
+            'home_button_text_en.required' => 'Home button text (English) is required.',
+            'home_button_text_ar.required' => 'Home button text (Arabic) is required.',
+            'home_button_link.required' => 'Home button link is required.',
+            'home_button_link.url' => 'Home button link must be a valid URL.',
+            'count.required' => 'Count is required.',
+            'count_heading_en.required' => 'Count heading (English) is required.',
+            'count_heading_ar.required' => 'Count heading (Arabic) is required.',
+            'count_description_en.required' => 'Count description (English) is required.',
+            'count_description_ar.required' => 'Count description (Arabic) is required.',
+            'home_logo.image' => 'Home logo must be a valid image file.',
+            'home_logo.mimes' => 'Home logo must be JPEG, PNG, JPG, or WebP format.',
+            'home_logo.max' => 'Home logo must be less than 2MB.',
+        ]);
+
+        $about = About::firstOrCreate([]);
+        
+        $about->update([
+            'home_short_description_ar' => $request->home_short_description_ar,
+            'home_short_description_en' => $request->home_short_description_en,
+            'home_button_text_en' => $request->home_button_text_en,
+            'home_button_text_ar' => $request->home_button_text_ar,
+            'home_button_link' => $request->home_button_link,
+            'count' => $request->count,
+            'count_heading_en' => $request->count_heading_en,
+            'count_heading_ar' => $request->count_heading_ar,
+            'count_description_en' => $request->count_description_en,
+            'count_description_ar' => $request->count_description_ar,
+        ]);
+
+        // Handle home logo
+        if ($request->hasFile('home_logo')) {
+            $about->clearMediaCollection('home_logo');
+            $about->addMediaFromRequest('home_logo')
+                ->toMediaCollection('home_logo');
+        }
+
+        return redirect()->route('dashboard.home.about')->with('success', 'Home section updated successfully!');
     }
 
     /**

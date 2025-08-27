@@ -34,6 +34,18 @@ return new class extends Migration
             $table->text('our_goal_description_ar')->nullable();
             $table->text('our_goal_description_en')->nullable();
             
+            // Home Section
+            $table->text('home_short_description_ar');
+            $table->text('home_short_description_en');
+            $table->string('home_button_text_en');
+            $table->string('home_button_text_ar');
+            $table->string('home_button_link');
+            $table->string('count');
+            $table->string('count_heading_en');
+            $table->string('count_heading_ar');
+            $table->text('count_description_en');
+            $table->text('count_description_ar');
+            
             $table->timestamps();
         });
     }

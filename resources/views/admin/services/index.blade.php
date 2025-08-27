@@ -6,14 +6,14 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="card-title mb-0">Banners Management</h5>
-                    <a href="{{ route('dashboard.banners.create') }}" class="btn btn-primary">
-                        <i class="fas fa-plus me-2"></i>Add New Banner
+                    <h5 class="card-title mb-0">Services Management</h5>
+                    <a href="{{ route('dashboard.services.create') }}" class="btn btn-primary">
+                        <i class="fas fa-plus me-2"></i>Add New Service
                     </a>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="bannersTable" class="table table-striped table-bordered">
+                        <table id="servicesTable" class="table table-striped table-bordered">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -25,29 +25,29 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($banners as $banner)
+                                @foreach($services as $service)
                                 <tr>
-                                    <td>{{ $banner->id }}</td>
+                                    <td>{{ $service->id }}</td>
                                     <td>
-                                        @if($banner->banner_image_url)
-                                            <img src="{{ $banner->banner_image_url }}" alt="Banner" class="img-thumbnail" style="max-width: 80px; max-height: 60px;">
+                                        @if($service->main_image_url)
+                                            <img src="{{ $service->main_image_url }}" alt="Service" class="img-thumbnail" style="max-width: 80px; max-height: 60px;">
                                         @else
                                             <span class="text-muted">No Image</span>
                                         @endif
                                     </td>
-                                    <td>{{ $banner->title_en }}</td>
-                                    <td>{{ $banner->title_ar }}</td>
+                                    <td>{{ $service->title_en }}</td>
+                                    <td>{{ $service->title_ar }}</td>
                                     <td>
-                                        <span class="badge {{ $banner->is_active ? 'bg-success' : 'bg-danger' }}">
-                                            {{ $banner->is_active ? 'Active' : 'Inactive' }}
+                                        <span class="badge {{ $service->is_active ? 'bg-success' : 'bg-danger' }}">
+                                            {{ $service->is_active ? 'Active' : 'Inactive' }}
                                         </span>
                                     </td>
                                     <td>
                                         <div class="btn-group" role="group">
-                                            <a href="{{ route('dashboard.banners.edit', $banner) }}" class="btn btn-sm btn-outline-primary">
+                                            <a href="{{ route('dashboard.services.edit', $service) }}" class="btn btn-sm btn-outline-primary">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-                                            <form action="{{ route('dashboard.banners.destroy', $banner) }}" method="POST" class="d-inline delete-form">
+                                            <form action="{{ route('dashboard.services.destroy', $service) }}" method="POST" class="d-inline delete-form">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-sm btn-outline-danger">
@@ -76,7 +76,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                Are you sure you want to delete this banner? This action cannot be undone.
+                Are you sure you want to delete this service? This action cannot be undone.
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -114,7 +114,7 @@
 <script>
 $(document).ready(function() {
     // Initialize DataTable
-    $('#bannersTable').DataTable({
+    $('#servicesTable').DataTable({
         responsive: true,
         order: [[0, 'desc']],
         pageLength: 25,
@@ -145,3 +145,4 @@ $(document).ready(function() {
 });
 </script>
 @endpush
+

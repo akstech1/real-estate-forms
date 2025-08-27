@@ -7,18 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Banner extends Model implements HasMedia
+class Link extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia;
 
     protected $fillable = [
         'title_en',
         'title_ar',
-        'short_description_en',
-        'short_description_ar',
-        'button_text_en',
-        'button_text_ar',
-        'button_link',
         'is_active',
     ];
 
@@ -33,12 +28,20 @@ class Banner extends Model implements HasMedia
 
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('banner_image')
-            ->singleFile();
+        $this->addMediaCollection('logo')
+            ->singleFile()
+            ->acceptsMimeTypes(['image/jpeg', 'image/png', 'image/webp']);
     }
 
-    public function getBannerImageUrlAttribute()
+    public function getLogoUrlAttribute()
     {
-        return $this->getFirstMediaUrl('banner_image');
+        return $this->getFirstMediaUrl('logo');
+    }
+
+    // Multilingual accessors
+    public function getTitleAttribute()
+    {
+        return app()->getLocale() === 'ar' ? $this->title_ar : $this->title_en;
     }
 }
+

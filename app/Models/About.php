@@ -24,6 +24,16 @@ class About extends Model implements HasMedia
         'our_mission_vision_description_en',
         'our_goal_description_ar',
         'our_goal_description_en',
+        'home_short_description_ar',
+        'home_short_description_en',
+        'home_button_text_en',
+        'home_button_text_ar',
+        'home_button_link',
+        'count',
+        'count_heading_en',
+        'count_heading_ar',
+        'count_description_en',
+        'count_description_ar',
     ];
 
     protected static function boot()
@@ -51,6 +61,11 @@ class About extends Model implements HasMedia
         
         // Our Goals - 3 images
         $this->addMediaCollection('goal_images')
+            ->acceptsMimeTypes(['image/jpeg', 'image/png', 'image/webp']);
+        
+        // Home Section - Single logo
+        $this->addMediaCollection('home_logo')
+            ->singleFile()
             ->acceptsMimeTypes(['image/jpeg', 'image/png', 'image/webp']);
     }
 
@@ -99,5 +114,31 @@ class About extends Model implements HasMedia
     public function getOurGoalDescriptionAttribute()
     {
         return app()->getLocale() === 'ar' ? $this->our_goal_description_ar : $this->our_goal_description_en;
+    }
+
+    // Home Section accessors
+    public function getHomeShortDescriptionAttribute()
+    {
+        return app()->getLocale() === 'ar' ? $this->home_short_description_ar : $this->home_short_description_en;
+    }
+
+    public function getHomeButtonTextAttribute()
+    {
+        return app()->getLocale() === 'ar' ? $this->home_button_text_ar : $this->home_button_text_en;
+    }
+
+    public function getCountHeadingAttribute()
+    {
+        return app()->getLocale() === 'ar' ? $this->count_heading_ar : $this->count_heading_en;
+    }
+
+    public function getCountDescriptionAttribute()
+    {
+        return app()->getLocale() === 'ar' ? $this->count_description_ar : $this->count_description_en;
+    }
+
+    public function getHomeLogoUrlAttribute()
+    {
+        return $this->getFirstMediaUrl('home_logo');
     }
 }

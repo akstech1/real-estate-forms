@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Banner;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class BannerController extends Controller
 {
@@ -30,25 +29,43 @@ class BannerController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'link' => 'nullable|url|max:255',
-            'is_active' => 'boolean'
-        ]);
+        try {
+            \Log::info('Banner store method called', ['request_data' => $request->all()]);
+            
+            $request->validate([
+                'title_en' => 'required|string|max:255',
+                'title_ar' => 'required|string|max:255',
+                'short_description_en' => 'nullable|string',
+                'short_description_ar' => 'nullable|string',
+                'button_text_en' => 'nullable|string|max:255',
+                'button_text_ar' => 'nullable|string|max:255',
+                'button_link' => 'nullable|url|max:255',
+                'banner_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'is_active' => 'nullable|boolean'
+            ]);
 
-        $data = $request->all();
-        $data['is_active'] = $request->has('is_active');
+            $data = $request->except(['banner_image']);
+            $data['is_active'] = $request->boolean('is_active');
+            
+            \Log::info('Creating banner with data', ['data' => $data]);
 
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('banners', 'public');
-            $data['image'] = $imagePath;
+            $banner = Banner::create($data);
+            
+            \Log::info('Banner created successfully', ['banner_id' => $banner->id]);
+
+            if ($request->hasFile('banner_image')) {
+                \Log::info('Processing banner image');
+                $banner->addMediaFromRequest('banner_image')
+                    ->toMediaCollection('banner_image');
+                \Log::info('Banner image processed successfully');
+            }
+
+            return redirect()->route('dashboard.banners.index')->with('success', 'Banner created successfully!');
+            
+        } catch (\Exception $e) {
+            \Log::error('Error creating banner', ['error' => $e->getMessage(), 'trace' => $e->getTraceAsString()]);
+            return back()->withInput()->withErrors(['error' => 'Error creating banner: ' . $e->getMessage()]);
         }
-
-        Banner::create($data);
-
-        return redirect()->route('dashboard.home.banners.index')->with('success', 'Banner created successfully!');
     }
 
     /**
@@ -65,29 +82,29 @@ class BannerController extends Controller
     public function update(Request $request, Banner $banner)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'link' => 'nullable|url|max:255',
-            'is_active' => 'boolean'
+            'title_en' => 'required|string|max:255',
+            'title_ar' => 'required|string|max:255',
+            'short_description_en' => 'nullable|string',
+            'short_description_ar' => 'nullable|string',
+            'button_text_en' => 'nullable|string|max:255',
+            'button_text_ar' => 'nullable|string|max:255',
+            'button_link' => 'nullable|url|max:255',
+            'banner_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'is_active' => 'nullable|boolean'
         ]);
 
-        $data = $request->all();
-        $data['is_active'] = $request->has('is_active');
-
-        if ($request->hasFile('image')) {
-            // Delete old image
-            if ($banner->image) {
-                Storage::disk('public')->delete($banner->image);
-            }
-            
-            $imagePath = $request->file('image')->store('banners', 'public');
-            $data['image'] = $imagePath;
-        }
+        $data = $request->except(['banner_image']);
+        $data['is_active'] = $request->boolean('is_active');
 
         $banner->update($data);
 
-        return redirect()->route('dashboard.home.banners.index')->with('success', 'Banner updated successfully!');
+        if ($request->hasFile('banner_image')) {
+            $banner->clearMediaCollection('banner_image');
+            $banner->addMediaFromRequest('banner_image')
+                ->toMediaCollection('banner_image');
+        }
+
+        return redirect()->route('dashboard.banners.index')->with('success', 'Banner updated successfully!');
     }
 
     /**
@@ -95,13 +112,9 @@ class BannerController extends Controller
      */
     public function destroy(Banner $banner)
     {
-        // Delete image file
-        if ($banner->image) {
-            Storage::disk('public')->delete($banner->image);
-        }
-
+        $banner->clearMediaCollection('banner_image');
         $banner->delete();
 
-        return redirect()->route('dashboard.home.banners.index')->with('success', 'Banner deleted successfully!');
+        return redirect()->route('dashboard.banners.index')->with('success', 'Banner deleted successfully!');
     }
 }

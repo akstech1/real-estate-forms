@@ -283,6 +283,150 @@
     </div>
 </div>
 
+<!-- Home Section -->
+<div class="card mb-4">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h6 class="card-title mb-0">
+            <i class="fas fa-home me-2 text-warning"></i>Home Section
+        </h6>
+        <button type="button" class="btn btn-warning btn-sm" onclick="document.getElementById('homeForm').submit()">
+            <i class="fas fa-save me-2"></i>Update Home Section
+        </button>
+    </div>
+    <div class="card-body">
+        <form id="homeForm" action="{{ route('dashboard.home.about.home.update') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
+
+            <div class="row">
+                <div class="col-md-6">
+                    <h6 class="mb-3 text-primary">English Content</h6>
+                    <div class="mb-3">
+                        <label for="home_short_description_en" class="form-label">Home Short Description (English) *</label>
+                        <textarea class="form-control @error('home_short_description_en') is-invalid @enderror"
+                                  id="home_short_description_en" name="home_short_description_en" rows="3" required>{{ old('home_short_description_en', $about->home_short_description_en ?? '') }}</textarea>
+                        @error('home_short_description_en')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="home_button_text_en" class="form-label">Home Button Text (English) *</label>
+                        <input type="text" class="form-control @error('home_button_text_en') is-invalid @enderror"
+                               id="home_button_text_en" name="home_button_text_en" value="{{ old('home_button_text_en', $about->home_button_text_en ?? '') }}" required>
+                        @error('home_button_text_en')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="count_heading_en" class="form-label">Count Heading (English) *</label>
+                        <input type="text" class="form-control @error('count_heading_en') is-invalid @enderror"
+                               id="count_heading_en" name="count_heading_en" value="{{ old('count_heading_en', $about->count_heading_en ?? '') }}" required>
+                        @error('count_heading_en')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="count_description_en" class="form-label">Count Description (English) *</label>
+                        <textarea class="form-control @error('count_description_en') is-invalid @enderror"
+                                  id="count_description_en" name="count_description_en" rows="3" required>{{ old('count_description_en', $about->count_description_en ?? '') }}</textarea>
+                        @error('count_description_en')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <h6 class="mb-3 text-primary">Arabic Content</h6>
+                    <div class="mb-3">
+                        <label for="home_short_description_ar" class="form-label">Home Short Description (Arabic) *</label>
+                        <textarea class="form-control @error('home_short_description_ar') is-invalid @enderror"
+                                  id="home_short_description_ar" name="home_short_description_ar" rows="3" required>{{ old('home_short_description_ar', $about->home_short_description_ar ?? '') }}</textarea>
+                        @error('home_short_description_ar')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="home_button_text_ar" class="form-label">Home Button Text (Arabic) *</label>
+                        <input type="text" class="form-control @error('home_button_text_ar') is-invalid @enderror"
+                               id="home_button_text_ar" name="home_button_text_ar" value="{{ old('home_button_text_ar', $about->home_button_text_ar ?? '') }}" required>
+                        @error('home_button_text_ar')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="count_heading_ar" class="form-label">Count Heading (Arabic) *</label>
+                        <input type="text" class="form-control @error('count_heading_ar') is-invalid @enderror"
+                               id="count_heading_ar" name="count_heading_ar" value="{{ old('count_heading_ar', $about->count_heading_ar ?? '') }}" required>
+                        @error('count_heading_ar')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="count_description_ar" class="form-label">Count Description (Arabic) *</label>
+                        <textarea class="form-control @error('count_description_ar') is-invalid @enderror"
+                                  id="count_description_ar" name="count_description_ar" rows="3" required>{{ old('count_description_ar', $about->count_description_ar ?? '') }}</textarea>
+                        @error('count_description_ar')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Common Fields -->
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="home_button_link" class="form-label">Home Button Link *</label>
+                        <input type="url" class="form-control @error('home_button_link') is-invalid @enderror"
+                               id="home_button_link" name="home_button_link" value="{{ old('home_button_link', $about->home_button_link ?? '') }}" 
+                               placeholder="https://example.com" required>
+                        @error('home_button_link')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="count" class="form-label">Count Display *</label>
+                        <input type="text" class="form-control @error('count') is-invalid @enderror"
+                               id="count" name="count" value="{{ old('count', $about->count ?? '') }}" 
+                               placeholder="1000+" required>
+                        @error('count')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="home_logo" class="form-label">Home Logo</label>
+                        <input type="file" class="form-control @error('home_logo') is-invalid @enderror"
+                               id="home_logo" name="home_logo" accept="image/*">
+                        <div class="form-text">Accepted formats: JPEG, PNG, JPG, WebP. <strong>Max size: 2MB</strong></div>
+                        @error('home_logo')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                        
+                        @if($about->home_logo_url)
+                        <div class="mt-2">
+                            <label class="form-label">Current Logo:</label>
+                            <img src="{{ $about->home_logo_url }}" alt="Current Home Logo" class="img-thumbnail" style="width: 100px; height: 100px; object-fit: contain;">
+                        </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
 @endsection
 
 @push('scripts')
@@ -291,6 +435,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const platformImagesInput = document.getElementById('platform_images');
     const goalImagesInput = document.getElementById('goal_images');
     const mainImageInput = document.getElementById('main_image');
+    const homeLogoInput = document.getElementById('home_logo');
 
     // File size validation function
     function validateFileSize(file, maxSizeMB = 2) {
@@ -394,6 +539,18 @@ document.addEventListener('DOMContentLoaded', function() {
             return false;
         }
     });
+
+    // Home Logo Validation
+    if (homeLogoInput) {
+        homeLogoInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file && !validateFileSize(file, 2)) {
+                alert(`⚠️ Home logo "${file.name}" is too large (${formatFileSize(file.size)}). The logo must be 2MB or smaller.`);
+                this.value = ''; // Reset input
+                return false;
+            }
+        });
+    }
 
     // Add loading states to all update buttons
     const updateButtons = document.querySelectorAll('button[onclick*="submit()"]');
