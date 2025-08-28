@@ -14,6 +14,7 @@ class Link extends Model implements HasMedia
     protected $fillable = [
         'title_en',
         'title_ar',
+        'url',
         'is_active',
     ];
 
@@ -44,4 +45,5 @@ class Link extends Model implements HasMedia
         return app()->getLocale() === 'ar' ? $this->title_ar : $this->title_en;
     }
 }
+
 

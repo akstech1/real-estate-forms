@@ -32,11 +32,15 @@ class LinkController extends Controller
         $request->validate([
             'title_en' => 'required|string|max:255',
             'title_ar' => 'required|string|max:255',
+            'url' => 'required|url|max:500',
             'logo' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
             'is_active' => 'boolean'
         ], [
             'title_en.required' => 'Title (English) is required.',
             'title_ar.required' => 'Title (Arabic) is required.',
+            'url.required' => 'URL is required.',
+            'url.url' => 'Please enter a valid URL.',
+            'url.max' => 'URL must be less than 500 characters.',
             'logo.required' => 'Logo is required.',
             'logo.image' => 'Logo must be a valid image file.',
             'logo.mimes' => 'Logo must be JPEG, PNG, JPG, or WebP format.',
@@ -82,11 +86,15 @@ class LinkController extends Controller
         $request->validate([
             'title_en' => 'required|string|max:255',
             'title_ar' => 'required|string|max:255',
+            'url' => 'required|url|max:500',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
             'is_active' => 'boolean'
         ], [
             'title_en.required' => 'Title (English) is required.',
             'title_ar.required' => 'Title (Arabic) is required.',
+            'url.required' => 'URL is required.',
+            'url.url' => 'Please enter a valid URL.',
+            'url.max' => 'URL must be less than 500 characters.',
             'logo.image' => 'Logo must be a valid image file.',
             'logo.mimes' => 'Logo must be JPEG, PNG, JPG, or WebP format.',
             'logo.max' => 'Logo must be less than 2MB.',

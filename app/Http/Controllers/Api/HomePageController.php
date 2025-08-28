@@ -33,7 +33,7 @@ class HomePageController extends Controller
             $banners = Banner::where('is_active', true)->orderBy('id', 'asc')->get();
             $about = About::first();
             $services = Service::where('is_active', true)->orderBy('id', 'asc')->get();
-            $stats = HomepageStat::get();
+            $stats = HomepageStat::first();
             $partners = Partner::where('is_active', true)->orderBy('id', 'asc')->get();
             $links = Link::where('is_active', true)->orderBy('id', 'asc')->get();
             $testimonials = Testimonial::where('is_active', true)->orderBy('created_at', 'desc')->get();
@@ -45,8 +45,7 @@ class HomePageController extends Controller
                     return [
                         'id' => $banner->id,
                         'title' => $language === 'ar' ? $banner->title_ar : $banner->title_en,
-                        'subtitle' => $language === 'ar' ? $banner->subtitle_ar : $banner->subtitle_en,
-                        'description' => $language === 'ar' ? $banner->description_ar : $banner->description_en,
+                        'description' => $language === 'ar' ? $banner->short_description_ar : $banner->short_description_en,
                         'image_url' => $banner->getFirstMediaUrl('banner_image') ?: null,
                         'button_text' => $language === 'ar' ? $banner->button_text_ar : $banner->button_text_en,
                         'button_link' => $banner->button_link,
@@ -73,19 +72,24 @@ class HomePageController extends Controller
                     ];
                 })->toArray(),
 
-                'stats' => $stats->map(function ($stat) use ($language) {
-                    return [
-                        'id' => $stat->id,
-                        'section_1_heading' => $language === 'ar' ? $stat->section_1_heading_ar : $stat->section_1_heading_en,
-                        'section_1_count' => $stat->section_1_count,
-                        'section_2_heading' => $language === 'ar' ? $stat->section_2_heading_ar : $stat->section_2_heading_en,
-                        'section_2_count' => $stat->section_2_count,
-                        'section_3_heading' => $language === 'ar' ? $stat->section_3_heading_ar : $stat->section_3_heading_en,
-                        'section_3_count' => $stat->section_3_count,
-                        'section_4_heading' => $language === 'ar' ? $stat->section_4_heading_ar : $stat->section_4_heading_en,
-                        'section_4_count' => $stat->section_4_count,
-                    ];
-                })->toArray(),
+                'stats' => [
+                    'section_1' => [
+                        'heading' => $language === 'ar' ? $stats->section_1_heading_ar : $stats->section_1_heading_en,
+                        'count' => $stats->section_1_count,
+                    ],
+                    'section_2' => [
+                        'heading' => $language === 'ar' ? $stats->section_2_heading_ar : $stats->section_2_heading_en,
+                        'count' => $stats->section_2_count,
+                    ],
+                    'section_3' => [
+                        'heading' => $language === 'ar' ? $stats->section_3_heading_ar : $stats->section_3_heading_en,
+                        'count' => $stats->section_3_count,
+                    ],
+                    'section_4' => [
+                        'heading' => $language === 'ar' ? $stats->section_4_heading_ar : $stats->section_4_heading_en,
+                        'count' => $stats->section_4_count,
+                    ],
+                ],
 
                 'partners' => $partners->map(function ($partner) use ($language) {
                     return [
@@ -102,6 +106,7 @@ class HomePageController extends Controller
                     return [
                         'id' => $link->id,
                         'title' => $language === 'ar' ? $link->title_ar : $link->title_en,
+                        'url' => $link->url,
                         'logo' => $link->getFirstMediaUrl('logo') ?: null,
                     ];
                 })->toArray(),

@@ -30,3 +30,4 @@ class HomepageStatSeeder extends Seeder
     }
 }
 
+

@@ -46,7 +46,35 @@
                             </div>
                         </div>
                         
-                        <!-- Common Fields -->
+                        <!-- URL Field -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="url" class="form-label">URL *</label>
+                                    <input type="url" class="form-control @error('url') is-invalid @enderror" 
+                                           id="url" name="url" value="{{ old('url', $link->url) }}" 
+                                           placeholder="https://example.com" required>
+                                    <div class="form-text">Enter the full URL including http:// or https://</div>
+                                    @error('url')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <div class="form-check mt-4">
+                                        <input class="form-check-input" type="checkbox" id="is_active" name="is_active" value="1"
+                                               {{ old('is_active', $link->is_active) ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="is_active">
+                                            Active
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Logo Field -->
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-3">
@@ -59,7 +87,7 @@
                                                 <img src="{{ $link->logo_url }}" alt="Current Link Logo" 
                                                      class="img-thumbnail" style="max-width: 200px; max-height: 150px;">
                                                 <div>
-                                                    <p class="text-muted mb-1">Current link logo</p>
+                                                    <p class="form-text mb-1">Current link logo</p>
                                                     <small class="text-muted">Upload a new logo to replace this one</small>
                                                 </div>
                                             </div>
@@ -72,18 +100,6 @@
                                     @error('logo')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
-                                </div>
-                            </div>
-                            
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <div class="form-check form-switch mt-4">
-                                        <input class="form-check-input" type="checkbox" id="is_active" name="is_active" value="1"
-                                               {{ old('is_active', $link->is_active) ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="is_active">
-                                            Active
-                                        </label>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -123,4 +139,5 @@ $(document).ready(function() {
 });
 </script>
 @endpush
+
 

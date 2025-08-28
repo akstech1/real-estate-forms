@@ -17,21 +17,25 @@ class LinkSeeder extends Seeder
             [
                 'title_en' => 'Home',
                 'title_ar' => 'الرئيسية',
+                'url' => 'https://example.com/home',
                 'is_active' => true,
             ],
             [
                 'title_en' => 'About Us',
                 'title_ar' => 'من نحن',
+                'url' => 'https://example.com/about',
                 'is_active' => true,
             ],
             [
                 'title_en' => 'Services',
                 'title_ar' => 'الخدمات',
+                'url' => 'https://example.com/services',
                 'is_active' => true,
             ],
             [
                 'title_en' => 'Contact',
                 'title_ar' => 'اتصل بنا',
+                'url' => 'https://example.com/contact',
                 'is_active' => true,
             ],
         ];
@@ -41,4 +45,5 @@ class LinkSeeder extends Seeder
         }
     }
 }
+
 

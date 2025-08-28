@@ -20,6 +20,7 @@
                                     <th>Logo</th>
                                     <th>Title (EN)</th>
                                     <th>Title (AR)</th>
+                                    <th>URL</th>
                                     <th>Status</th>
                                     <th>Actions</th>
                                 </tr>
@@ -37,6 +38,11 @@
                                     </td>
                                     <td>{{ $link->title_en }}</td>
                                     <td>{{ $link->title_ar }}</td>
+                                    <td>
+                                        <a href="{{ $link->url }}" target="_blank" class="text-decoration-none">
+                                            {{ Str::limit($link->url, 40) }}
+                                        </a>
+                                    </td>
                                     <td>
                                         <span class="badge {{ $link->is_active ? 'bg-success' : 'bg-danger' }}">
                                             {{ $link->is_active ? 'Active' : 'Inactive' }}
@@ -144,4 +150,5 @@ $(document).ready(function() {
 });
 </script>
 @endpush
+
 
