@@ -36,3 +36,16 @@ Route::get('/faqs', [App\Http\Controllers\Api\FaqsController::class, 'index']);
 // Partners API
 Route::get('/partners', [App\Http\Controllers\Api\PartnersController::class, 'index']);
 
+// Roles API
+Route::get('/roles', [App\Http\Controllers\Api\RoleController::class, 'index']);
+
+// Auth API
+Route::post('/register', [App\Http\Controllers\Api\AuthController::class, 'register']);
+Route::post('/login', [App\Http\Controllers\Api\AuthController::class, 'login']);
+Route::post('/logout', [App\Http\Controllers\Api\AuthController::class, 'logout'])->middleware('auth:sanctum');
+
+// Password Reset APIs
+Route::post('/forgot-password', [App\Http\Controllers\Api\AuthController::class, 'forgotPassword']);
+Route::post('/validate-otp', [App\Http\Controllers\Api\AuthController::class, 'validateOtp']);
+Route::post('/reset-password', [App\Http\Controllers\Api\AuthController::class, 'resetPassword']);
+

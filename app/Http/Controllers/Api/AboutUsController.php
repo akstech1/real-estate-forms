@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Traits\ApiResponseTrait;
 use App\Models\About;
 use App\Models\Partner;
 use Illuminate\Http\Request;
@@ -10,6 +11,7 @@ use Illuminate\Http\JsonResponse;
 
 class AboutUsController extends Controller
 {
+    use ApiResponseTrait;
     /**
      * Get About Us information with language support
      *
@@ -79,40 +81,5 @@ class AboutUsController extends Controller
         } catch (\Exception $e) {
             return $this->errorResponse('Internal server error: ' . $e->getMessage(), 500);
         }
-    }
-
-    /**
-     * Return success response
-     *
-     * @param mixed $data
-     * @param string $message
-     * @param int $statusCode
-     * @return JsonResponse
-     */
-    private function successResponse($data, string $message = 'Success', int $statusCode = 200): JsonResponse
-    {
-        return response()->json([
-            'error' => false,
-            'message' => $message,
-            'status_code' => $statusCode,
-            'data' => $data,
-        ], $statusCode);
-    }
-
-    /**
-     * Return error response
-     *
-     * @param string $message
-     * @param int $statusCode
-     * @return JsonResponse
-     */
-    private function errorResponse(string $message, int $statusCode = 400): JsonResponse
-    {
-        return response()->json([
-            'error' => true,
-            'message' => $message,
-            'status_code' => $statusCode,
-            'data' => [],
-        ], $statusCode);
     }
 }

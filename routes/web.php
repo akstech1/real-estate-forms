@@ -14,6 +14,7 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\HomepageStatController;
 use App\Http\Controllers\LinkController;
 use App\Http\Controllers\TestimonialController;
+use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -88,6 +89,9 @@ Route::middleware(['auth', 'verified'])->prefix('dashboard')->name('dashboard.')
     Route::get('contact', [ContactUsController::class, 'edit'])->name('contact.edit');
     Route::put('contact', [ContactUsController::class, 'update'])->name('contact.update');
     Route::delete('contact/social-media/{id}', [ContactUsController::class, 'deleteSocialMediaLink'])->name('contact.social-media.delete');
+    
+    // Roles Management
+    Route::resource('roles', RoleController::class);
 });
 
 // Default Breeze routes - This route is now handled by the dashboard group above

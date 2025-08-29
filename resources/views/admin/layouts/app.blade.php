@@ -533,6 +533,12 @@
                 <i class="fas fa-comments"></i>
                 Testimonials
             </a>
+            
+            {{-- Roles menu hidden - functionality preserved for future use --}}
+            {{-- <a class="nav-link {{ request()->routeIs('dashboard.roles.*') ? 'active' : '' }}" href="{{ route('dashboard.roles.index') }}">
+                <i class="fas fa-user-shield"></i>
+                Roles
+            </a> --}}
         </nav>
     </div>
     

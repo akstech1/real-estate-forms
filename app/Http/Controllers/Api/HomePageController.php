@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Traits\ApiResponseTrait;
 use App\Models\Banner;
 use App\Models\About;
 use App\Models\Service;
@@ -16,6 +17,7 @@ use Illuminate\Http\JsonResponse;
 
 class HomePageController extends Controller
 {
+    use ApiResponseTrait;
     /**
      * Get Home Page data with all sections
      *
@@ -136,40 +138,5 @@ class HomePageController extends Controller
         } catch (\Exception $e) {
             return $this->errorResponse('Internal server error: ' . $e->getMessage(), 500);
         }
-    }
-
-    /**
-     * Return success response
-     *
-     * @param mixed $data
-     * @param string $message
-     * @param int $statusCode
-     * @return JsonResponse
-     */
-    private function successResponse($data, string $message = 'Success', int $statusCode = 200): JsonResponse
-    {
-        return response()->json([
-            'error' => false,
-            'message' => $message,
-            'status_code' => $statusCode,
-            'data' => $data,
-        ], $statusCode);
-    }
-
-    /**
-     * Return error response
-     *
-     * @param string $message
-     * @param int $statusCode
-     * @return JsonResponse
-     */
-    private function errorResponse(string $message, int $statusCode = 400): JsonResponse
-    {
-        return response()->json([
-            'error' => true,
-            'message' => $message,
-            'status_code' => $statusCode,
-            'data' => [],
-        ], $statusCode);
     }
 }

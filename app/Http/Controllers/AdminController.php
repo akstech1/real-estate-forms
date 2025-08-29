@@ -8,6 +8,7 @@ use App\Models\Service;
 use App\Models\Testimonial;
 use App\Models\Partner;
 use App\Models\Link;
+use Spatie\Permission\Models\Role;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -25,6 +26,7 @@ class AdminController extends Controller
             'testimonials' => Testimonial::count(),
             'partners' => Partner::count(),
             'links' => Link::count(),
+            // 'roles' => Role::count(), // Hidden from dashboard
         ];
 
         return view('admin.dashboard', compact('counts'));

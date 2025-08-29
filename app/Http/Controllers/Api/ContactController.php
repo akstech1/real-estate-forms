@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Traits\ApiResponseTrait;
 use App\Models\ContactUs;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 
 class ContactController extends Controller
 {
+    use ApiResponseTrait;
     /**
      * Get Contact information with language support
      *
@@ -56,40 +58,5 @@ class ContactController extends Controller
         } catch (\Exception $e) {
             return $this->errorResponse('Internal server error: ' . $e->getMessage(), 500);
         }
-    }
-
-    /**
-     * Return success response
-     *
-     * @param mixed $data
-     * @param string $message
-     * @param int $statusCode
-     * @return JsonResponse
-     */
-    private function successResponse($data, string $message = 'Success', int $statusCode = 200): JsonResponse
-    {
-        return response()->json([
-            'error' => false,
-            'message' => $message,
-            'status_code' => $statusCode,
-            'data' => $data,
-        ], $statusCode);
-    }
-
-    /**
-     * Return error response
-     *
-     * @param string $message
-     * @param int $statusCode
-     * @return JsonResponse
-     */
-    private function errorResponse(string $message, int $statusCode = 400): JsonResponse
-    {
-        return response()->json([
-            'error' => true,
-            'message' => $message,
-            'status_code' => $statusCode,
-            'data' => [],
-        ], $statusCode);
     }
 }

@@ -164,6 +164,32 @@
         </div>
     </div>
 
+    {{-- Roles widget hidden - functionality preserved for future use --}}
+    {{-- <div class="col-xl-3 col-md-6 mb-3">
+        <div class="card border-0 shadow-sm h-100 dashboard-card">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0">
+                        <div class="bg-dark bg-opacity-10 rounded-circle p-3">
+                            <i class="fas fa-user-shield fa-2x text-dark"></i>
+                        </div>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <h6 class="card-title mb-1">Roles</h6>
+                        <h3 class="mb-0 fw-bold text-dark">{{ $counts['roles'] }}</h3>
+                        <small class="text-muted">Total roles</small>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer bg-transparent border-0">
+                <a href="{{ route('dashboard.roles.index') }}" class="btn btn-sm btn-outline-dark w-100">
+                    <i class="fas fa-eye me-2"></i>View All
+                </a>
+            </div>
+        </div>
+    </div> --}}
+
+
 
 </div>
 
